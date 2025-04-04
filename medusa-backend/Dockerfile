@@ -1,12 +1,13 @@
-FROM node:18
+FROM node:20
 
 WORKDIR /app
 
-COPY medusa-backend/package.json .  
-COPY medusa-backend/yarn.lock .  
-RUN yarn install  
+COPY package.json yarn.lock ./
 
-COPY medusa-backend/ .  
+RUN yarn install
+
+COPY . .
 
 EXPOSE 9000
+
 CMD ["yarn", "start"]
