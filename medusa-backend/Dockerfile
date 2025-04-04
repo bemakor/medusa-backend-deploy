@@ -2,6 +2,8 @@ FROM node:20
 
 WORKDIR /app
 
+RUN corepack enable && corepack prepare yarn@4.8.1 --activate
+
 COPY package.json yarn.lock ./
 
 RUN yarn install
