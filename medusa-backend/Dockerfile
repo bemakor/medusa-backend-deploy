@@ -15,4 +15,4 @@ EXPOSE 9000
 # Disable Medusa Admin UI
 ENV MEDUSA_FF_DISABLE_ADMIN=true
 
-CMD ["yarn", "start"]
+CMD ["medusa", "start", "--no-admin"]
