@@ -7,7 +7,7 @@ yarn-error.log
 .DS_Store
 
 # Ignore build artifacts
-/build
+# /build
 
 # Ignore uploads and cache
 /uploads
