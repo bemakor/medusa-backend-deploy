@@ -8,7 +8,7 @@ yarn-error.log
 
 # Ignore build artifacts
 /build
-!.src/admin/build/  # Allow admin UI build to be tracked
+!/src/admin/build/  # Allow admin UI build to be tracked
 
 # Ignore uploads and cache
 /uploads
@@ -26,7 +26,7 @@ yarn-error.log
 .idea
 
 # TypeScript
-./tsconfig.tsbuildinfo
+tsconfig.tsbuildinfo
 
 # Test coverage
 coverage
