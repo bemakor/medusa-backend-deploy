@@ -8,7 +8,6 @@ yarn-error.log
 
 # Ignore build artifacts
 /build
-!/src/admin/build/  # Allow admin UI build to be tracked
 
 # Ignore uploads and cache
 /uploads
