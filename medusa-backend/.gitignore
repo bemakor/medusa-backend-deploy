@@ -1,21 +1,20 @@
-/dist
-# .env
-.DS_Store
-/uploads
+# Ignore node modules and logs
 /node_modules
 yarn-error.log
 
-.idea
+# Ignore environment and local config
+.env
+.DS_Store
 
-coverage
+# Ignore build artifacts
+/build
+!.src/admin/build/  # Allow admin UI build to be tracked
 
-!src/**
-
-./tsconfig.tsbuildinfo
-medusa-db.sql
-build
+# Ignore uploads and cache
+/uploads
 .cache
 
+# Ignore Yarn 2 (Berry) artifacts except useful folders
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
@@ -23,4 +22,17 @@ build
 !.yarn/sdks
 !.yarn/versions
 
+# IDEs
+.idea
+
+# TypeScript
+./tsconfig.tsbuildinfo
+
+# Test coverage
+coverage
+
+# SQLite dump (optional)
+medusa-db.sql
+
+# Medusa specific
 .medusa
