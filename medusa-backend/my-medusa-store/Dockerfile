@@ -1,18 +1,18 @@
-FROM node:20
+FROM node:18
 
 WORKDIR /app
 
-RUN corepack enable && corepack prepare yarn@4.8.1 --activate
+RUN apt-get update && apt-get install -y \
+    python3 \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY package.json yarn.lock ./
-
 RUN yarn install
 
 COPY . .
 
 EXPOSE 9000
 
-# Disable Medusa Admin UI
-ENV MEDUSA_FF_DISABLE_ADMIN=true
-
-CMD ["medusa", "start", "--no-admin"]
+CMD ["yarn", "dev"]
