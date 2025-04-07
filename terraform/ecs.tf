@@ -20,7 +20,8 @@ resource "aws_ecs_task_definition" "medusa_task" {
   container_definitions = jsonencode([
     {
       name      = "medusa"
-      image     = "nginx"  # Use your custom image if needed
+      image     = "<IMAGE_TAG>"
+      # image     = "nginx"  # Use your custom image if needed
       portMappings = [
         {
           containerPort = 80
