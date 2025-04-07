@@ -17,7 +17,7 @@ resource "aws_lb" "medusa_alb" {
 # Target Group for ECS Fargate
 resource "aws_lb_target_group" "medusa_tg" {
   name        = "medusa-tg"
-  port        = 80
+  port        = 9000
   protocol    = "HTTP"
   target_type = "ip"                       # Important for ECS Fargate
   vpc_id      = aws_vpc.medusa_vpc.id
@@ -40,7 +40,7 @@ resource "aws_lb_target_group" "medusa_tg" {
 # Listener for ALB
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.medusa_alb.arn
-  port              = 80
+  port              = 9000
   protocol          = "HTTP"
 
   default_action {
