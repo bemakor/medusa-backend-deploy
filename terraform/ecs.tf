@@ -20,10 +20,10 @@ resource "aws_ecs_task_definition" "medusa_task" {
   container_definitions = jsonencode([
     {
       name      = "medusa"
-      image     = "medusajs/medusa"  # Use your custom image if needed
+      image     = "nginx"  # Use your custom image if needed
       portMappings = [
         {
-          containerPort = 9000
+          containerPort = 80
           protocol      = "tcp"
         }
       ]
@@ -50,14 +50,14 @@ resource "aws_ecs_service" "medusa_service" {
 
   network_configuration {
     subnets         = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
-    security_groups = [aws_security_group.medusa_sg.id]
+    security_groups = [aws_security_group.medusa_ecs_sg.id]
     assign_public_ip = true
   }
 
   load_balancer {
     target_group_arn = aws_lb_target_group.medusa_tg.arn
     container_name   = "medusa"
-    container_port   = 9000
+    container_port   = 80
   }
 
   depends_on = [

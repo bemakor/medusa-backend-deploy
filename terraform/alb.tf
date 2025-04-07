@@ -17,7 +17,7 @@ resource "aws_lb" "medusa_alb" {
 # Target Group for ECS Fargate
 resource "aws_lb_target_group" "medusa_tg" {
   name        = "medusa-tg"
-  port        = 9000
+  port        = 80
   protocol    = "HTTP"
   target_type = "ip"                       # Important for ECS Fargate
   vpc_id      = aws_vpc.medusa_vpc.id
