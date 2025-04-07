@@ -26,7 +26,7 @@ jobs:
 
       - name: Update ECS Image Tag in ecs.tf
         run: |
-          bash /medusa-store/image-updater.sh "rameshxt/medusa-backend:v1.0.${GITHUB_SHA}"
+          bash image-updater.sh "rameshxt/medusa-backend:v1.0.${GITHUB_SHA}"
 
       - name: Push Docker Image to Docker Hub
         run: |
