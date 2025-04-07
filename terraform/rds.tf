@@ -1,4 +1,3 @@
-
 # Select 2 Subnets in different AZs for RDS
 resource "aws_db_subnet_group" "medusa_db_subnet_group" {
   name       = "medusa-db-subnet-group"
@@ -29,7 +28,6 @@ resource "aws_db_instance" "medusa_postgres" {
   apply_immediately       = true
   port                    = 5432
 
-  
 
   tags = {
     Name = "MedusaPostgres"

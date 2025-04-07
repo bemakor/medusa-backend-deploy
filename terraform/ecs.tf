@@ -36,16 +36,6 @@ resource "aws_ecs_task_definition" "medusa_task" {
         }
       ]
     },
-    # Optional: Nginx container for reverse proxy or static file serving
-    {
-      name      = "nginx"
-      image     = "nginx"
-      portMappings = [
-        {
-          containerPort = 80
-        }
-      ]
-    }
   ])
 }
 
@@ -64,17 +54,15 @@ resource "aws_ecs_service" "medusa_service" {
     assign_public_ip = true
   }
 
-  # Register Nginx container to ALB Target Group
   load_balancer {
-    target_group_arn = aws_lb_target_group.nginx_tg.arn
-    container_name   = "nginx"
-    container_port   = 80
+    target_group_arn = aws_lb_target_group.medusa_tg.arn
+    container_name   = "medusa"
+    container_port   = 9000
   }
 
   depends_on = [
     aws_lb_listener.http_listener
   ]
 }
-
 
 

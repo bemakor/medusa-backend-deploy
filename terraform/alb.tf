@@ -37,30 +37,7 @@ resource "aws_lb_target_group" "medusa_tg" {
   }
 }
 
-# Nginx Target Group for Reverse Proxy
-resource "aws_lb_target_group" "nginx_tg" {
-  name        = "nginx-tg"
-  port        = 80
-  protocol    = "HTTP"
-  target_type = "ip"                       # Important for ECS Fargate
-  vpc_id      = aws_vpc.medusa_vpc.id
-
-  health_check {
-    path                = "/"
-    protocol            = "HTTP"
-    matcher             = "200"
-    interval            = 30
-    timeout             = 5
-    healthy_threshold   = 3
-    unhealthy_threshold = 2
-  }
-
-  tags = {
-    Name = "nginx-target-group"
-  }
-}
-
-# Listener for HTTP traffic
+# Listener for ALB
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.medusa_alb.arn
   port              = 80
@@ -69,21 +46,5 @@ resource "aws_lb_listener" "http_listener" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.medusa_tg.arn
-  }
-}
-
-resource "aws_lb_listener_rule" "nginx_rule" {
-  listener_arn = aws_lb_listener.http_listener.arn
-  priority     = 20
-
-  action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.nginx_tg.arn
-  }
-
-  condition {
-    path_pattern {
-      values = ["/nginx*"]
-    }
   }
 }
