@@ -32,6 +32,12 @@ jobs:
         run: |
           docker push "rameshxt/medusa-backend:v1.0.${GITHUB_SHA}"
 
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+          terraform_version: latest
+
       - name: Deploy to ECS using Terraform
         run: |
           cd terraform
