@@ -24,7 +24,7 @@ build
 !.yarn/versions
 
 .medusa
-
+public
 
 # Terraform data
 .terraform/
