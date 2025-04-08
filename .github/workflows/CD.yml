@@ -3,7 +3,7 @@ name: Medusa CD Pipeline
 on:
   push:
     branches:
-      - master
+      - work
 
 jobs:
   build_and_deploy:
