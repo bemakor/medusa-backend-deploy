@@ -19,4 +19,6 @@ RUN cp -r .medusa/server/public ./public
 
 EXPOSE 9000
 
-CMD ["yarn", "start"]
+# CMD ["yarn", "start"]
+
+CMD ["sh", "-c", "yarn medusa migrations run && yarn start"]
