@@ -15,6 +15,8 @@ COPY . .
 
 RUN yarn build
 
+RUN cp -r .medusa/server/public ./public
+
 EXPOSE 9000
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
