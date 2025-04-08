@@ -1,26 +1,26 @@
-# Node junk
-node_modules
-npm-debug.log
-yarn-error.log
+# # Node junk
+# node_modules
+# npm-debug.log
+# yarn-error.log
 
-# Git
-.git
-.gitignore
+# # Git
+# .git
+# .gitignore
 
-# Docs & logs
-*.md
-*.log
+# # Docs & logs
+# *.md
+# *.log
 
-# Tests
-__tests__/
-test/
+# # Tests
+# __tests__/
+# test/
 
-# Local env & config
-.env
+# # Local env & config
+# .env
 
-# Admin panel (source, not build)
-admin/
+# # Admin panel (source, not build)
+# admin/
 
-# Docker
-Dockerfile
-.dockerignore
+# # Docker
+# Dockerfile
+# .dockerignore
