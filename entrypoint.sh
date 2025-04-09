@@ -1,5 +1,7 @@
 #!/bin/sh
 
+export NODE_TLS_REJECT_UNAUTHORIZED=0
+
 echo "Running database migration."
 yarn medusa db:migrate
 
