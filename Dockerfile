@@ -1,27 +1,29 @@
-FROM node:20
+# --- Build stage ---
+    FROM node:20-alpine as builder
 
-WORKDIR /app
-
-RUN apt-get update && apt-get install -y \
-    python3 \
-    build-essential \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
-
-COPY package.json yarn.lock ./
-
-RUN yarn install
-
-COPY . .
-
-RUN yarn build
-
-RUN cp -r .medusa/server/public ./public
-
-COPY entrypoint.sh /app/entrypoint.sh
-
-RUN chmod +x /app/entrypoint.sh
-
-EXPOSE 9000
-
-CMD ["sh", "/app/entrypoint.sh"]
+    WORKDIR /app
+    
+    RUN apk add --no-cache python3 make g++ \
+        && npm install -g yarn
+    
+    COPY package.json yarn.lock ./
+    RUN yarn install
+    
+    COPY . .
+    RUN yarn build
+    RUN cp -r .medusa/server/public ./public
+    
+    # --- Final image ---
+    FROM node:20-alpine
+    
+    WORKDIR /app
+    
+    COPY --from=builder /app ./
+    COPY entrypoint.sh /app/entrypoint.sh
+    
+    RUN chmod +x /app/entrypoint.sh
+    
+    EXPOSE 9000
+    
+    CMD ["sh", "/app/entrypoint.sh"]
+    
