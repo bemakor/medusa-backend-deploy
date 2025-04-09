@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY package.json yarn.lock ./
+
 RUN yarn install
 
 COPY . .
@@ -17,8 +18,10 @@ RUN yarn build
 
 RUN cp -r .medusa/server/public ./public
 
+COPY entrypoint.sh /app/entrypoint.sh
+
+RUN chmod +x /app/entrypoint.sh
+
 EXPOSE 9000
 
-# CMD ["yarn", "start"]
-
-CMD ["sh", "-c", "yarn medusa migrations run && yarn start"]
+CMD ["sh", "/app/entrypoint.sh"]
