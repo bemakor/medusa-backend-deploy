@@ -9,7 +9,7 @@ resource "aws_vpc" "medusa_vpc" {
   }
 }
 
-# SB - 1
+# SB 1 PUBLIC
 resource "aws_subnet" "public_subnet_1" {
   vpc_id                  = aws_vpc.medusa_vpc.id
   cidr_block              = "10.0.1.0/24"
@@ -21,7 +21,7 @@ resource "aws_subnet" "public_subnet_1" {
   }
 }
 
-# SB - 1
+# SB 2 PUBLIC
 resource "aws_subnet" "public_subnet_2" {
   vpc_id                  = aws_vpc.medusa_vpc.id
   cidr_block              = "10.0.2.0/24"
@@ -56,13 +56,13 @@ resource "aws_route_table" "public_rt" {
   }
 }
 
-# RT Association - SB - 1
+# RT ASSOCIATION - SB - 1
 resource "aws_route_table_association" "a1" {
   subnet_id      = aws_subnet.public_subnet_1.id
   route_table_id = aws_route_table.public_rt.id
 }
 
-# RT Association - SB - 2
+# RT ASSOCIATION - SB - 2
 resource "aws_route_table_association" "a2" {
   subnet_id      = aws_subnet.public_subnet_2.id
   route_table_id = aws_route_table.public_rt.id

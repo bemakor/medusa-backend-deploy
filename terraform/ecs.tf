@@ -1,4 +1,4 @@
-# Cluster definition for Medusa
+# MEDUSA ECS CLUSTER
 resource "aws_ecs_cluster" "medusa_cluster" {
   name = "medusa-cluster"
 
@@ -7,7 +7,7 @@ resource "aws_ecs_cluster" "medusa_cluster" {
   }
 }
 
-# Task Definition for Medusa
+# MEDUSA TASK DEFIFNITION
 resource "aws_ecs_task_definition" "medusa_task" {
   family                   = "medusa-task"
   network_mode             = "awsvpc"
@@ -19,9 +19,8 @@ resource "aws_ecs_task_definition" "medusa_task" {
 
   container_definitions = jsonencode([
     {
-      name      = "medusa"
-      image     = "<IMAGE_TAG>"
-      # image     = "nginx"  # Use your custom image if needed
+      name      = "medusa-server"
+      image     = "rameshxt/medusa-backend:lite"
       portMappings = [
         {
           containerPort = 9000
@@ -30,18 +29,21 @@ resource "aws_ecs_task_definition" "medusa_task" {
       ]
       environment = [
         {
+          # DB CONNECTION STRING
           name  = "DATABASE_URL"
-
-          # This is the connection string for the Postgres database
           value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.endpoint}:5432/${aws_db_instance.medusa_postgres.db_name}"
+        },
+        {
+          # TLS REJECT UNAUTHORIZED
+          name  = "NODE_TLS_REJECT_UNAUTHORIZED"
+          value = "0"
         }
       ]
     },
   ])
 }
 
-
-# ECS Service for Medusa
+# MEDUSA ECS SERVICE
 resource "aws_ecs_service" "medusa_service" {
   name            = "medusa-service"
   cluster         = aws_ecs_cluster.medusa_cluster.id
@@ -57,7 +59,7 @@ resource "aws_ecs_service" "medusa_service" {
 
   load_balancer {
     target_group_arn = aws_lb_target_group.medusa_tg.arn
-    container_name   = "medusa"
+    container_name   = "medusa-server"
     container_port   = 9000
   }
 
@@ -65,5 +67,3 @@ resource "aws_ecs_service" "medusa_service" {
     aws_lb_listener.http_listener
   ]
 }
-
-

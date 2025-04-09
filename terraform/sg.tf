@@ -1,3 +1,4 @@
+# ALB SG
 resource "aws_security_group" "medusa_sg" {
   name        = "medusa-public-sg"
   description = "Allow HTTP, HTTPS, and SSH"
@@ -38,7 +39,7 @@ resource "aws_security_group" "medusa_sg" {
   }
 }
 
-# SG 
+# ECS SG 
 resource "aws_security_group" "medusa_ecs_sg" {
   name        = "medusa-ecs-sg"
   description = "Security Group for ECS Service"
@@ -46,37 +47,46 @@ resource "aws_security_group" "medusa_ecs_sg" {
 
   ingress {
     description     = "Allow Container to ALB"
-    from_port       = 9000           # Port your container is listening on (adjust if needed)
+    from_port       = 9000
     to_port         = 9000
     protocol        = "tcp"
-    security_groups = [aws_security_group.medusa_sg.id]  # Allow traffic from ALB SG
-  }
-  
-  ingress {
-    description     = "Allow HTTP"
-    from_port       = 80           # Port your container is listening on (adjust if needed)
-    to_port         = 80
-    protocol        = "tcp"
-    security_groups = [aws_security_group.medusa_sg.id]  # Allow traffic from ALB SG
-  }
-
-  ingress {
-    description = "Allow HTTPS"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    security_groups = [aws_security_group.medusa_sg.id]
   }
 
   egress {
     description = "Allow all outbound"
     from_port   = 0
     to_port     = 0
-    protocol    = "-1"  # Allow all outbound traffic
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
     Name = "medusa-ecs-sg"
+  }
+}
+
+# RDS SG
+resource "aws_security_group" "rds_sg" {
+  name        = "medusa-rds-sg"
+  description = "Allow Postgres inbound"
+  vpc_id      = aws_vpc.medusa_vpc.id
+
+  ingress {
+    from_port   = 5432
+    to_port     = 5432
+    protocol    = "tcp"
+    # cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "RDS Security Group"
   }
 }
