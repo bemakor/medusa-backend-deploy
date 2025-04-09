@@ -39,9 +39,24 @@ resource "aws_ecs_task_definition" "medusa_task" {
           value = "0"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = "/ecs/medusa-server"
+          awslogs-region        = "us-east-1"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     },
   ])
 }
+
+# CLOUDWATCH LOG GROUP
+resource "aws_cloudwatch_log_group" "medusa_logs" {
+  name              = "/ecs/medusa-server"
+  retention_in_days = 7
+}
+
 
 # MEDUSA ECS SERVICE
 resource "aws_ecs_service" "medusa_service" {
