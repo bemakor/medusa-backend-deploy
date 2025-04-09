@@ -3,8 +3,7 @@
 
     WORKDIR /app
     
-    RUN apk add --no-cache python3 make g++ \
-        && npm install -g yarn
+    RUN apk add --no-cache python3 make g++
     
     COPY package.json yarn.lock ./
     RUN yarn install
