@@ -25,8 +25,12 @@ else
   exit 1
 fi
 
-echo "Creating admin user.."
-yarn medusa user --email admin@gmail.com --password admin
+# Get the current minute and append it to the email
+CURRENT_MINUTE=$(date +%M)
+EMAIL="admin${CURRENT_MINUTE}@gmail.com"
+
+echo "Creating admin user with email: $EMAIL"
+yarn medusa user --email "$EMAIL" --password admin
 if [ $? -eq 0 ]; then
   echo "Admin user created successfully."
 else
