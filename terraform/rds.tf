@@ -27,9 +27,23 @@ resource "aws_db_instance" "medusa_postgres" {
   iam_database_authentication_enabled = true
   apply_immediately       = true
   port                    = 5432
+  parameter_group_name    = aws_db_parameter_group.medusa_postgres_parameter_group.name  # Use parameter group
 
   tags = {
     Name = "MedusaPostgres"
+  }
+}
+
+# Create a parameter group for PostgreSQL
+resource "aws_db_parameter_group" "medusa_postgres_parameter_group" {
+  name        = "medusa-postgres-parameter-group"
+  family      = "postgres17"
+  description = "Parameter group for Medusa PostgreSQL"
+
+  parameter {
+    name  = "max_connections"
+    value = "500"  # Set the pool size you want
+    apply_method = "pending-reboot"
   }
 }
 

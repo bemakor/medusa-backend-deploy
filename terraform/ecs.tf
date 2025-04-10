@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "medusa_task" {
   container_definitions = jsonencode([
     {
       name      = "medusa-server"
-      image     = "<IMAGE_TAG>"
+      image     = "rameshxt/medusa-backend:v1.0.16"
       portMappings = [
         {
           containerPort = 9000
@@ -29,9 +29,10 @@ resource "aws_ecs_task_definition" "medusa_task" {
       ]
       environment = [
         {
-          # DB CONNECTION STRING
+          # DB CONNECTION STRING [Interpolation dynamic string genaration]
           name  = "DATABASE_URL"
-          value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.endpoint}:5432/${aws_db_instance.medusa_postgres.db_name}"
+          # value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.endpoint}:5432/medusadb"
+          value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.address}:${aws_db_instance.medusa_postgres.port}/${aws_db_instance.medusa_postgres.db_name}?sslmode=require"
         },
         {
           # TLS REJECT UNAUTHORIZED
