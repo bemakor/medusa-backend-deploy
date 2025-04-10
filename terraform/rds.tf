@@ -47,6 +47,11 @@ resource "aws_db_parameter_group" "medusa_postgres_parameter_group" {
     value = "500"
     apply_method = "pending-reboot"
   }
+    parameter {
+    name  = "rds.force_ssl"
+    value = "0"  # Disables SSL enforcement
+    apply_method = "pending-reboot"
+  }
 }
 
 # CONNECTION BETWEEN ECS AND RDS
