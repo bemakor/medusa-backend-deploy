@@ -31,7 +31,6 @@ resource "aws_ecs_task_definition" "medusa_task" {
         {
           # DB CONNECTION STRING [Interpolation dynamic string genaration]
           name  = "DATABASE_URL"
-          # value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.endpoint}:5432/medusadb"
           value = "postgresql://${aws_db_instance.medusa_postgres.username}:${aws_db_instance.medusa_postgres.password}@${aws_db_instance.medusa_postgres.address}:${aws_db_instance.medusa_postgres.port}/${aws_db_instance.medusa_postgres.db_name}?sslmode=require"
         },
         {

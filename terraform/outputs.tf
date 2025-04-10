@@ -39,7 +39,6 @@ output "route_table_association_2" {
   value       = aws_route_table_association.a2.id
 }
 
-
 # SG
 output "alb_security_group_id" {
   description = "Security Group ID for ALB (medusa_sg)"
@@ -55,7 +54,6 @@ output "rds_security_group_id" {
   description = "Security Group ID for RDS (rds_sg)"
   value       = aws_security_group.rds_sg.id
 }
-
 
 # ALB
 output "alb_arn" {
@@ -78,7 +76,6 @@ output "http_listener_arn" {
   value       = aws_lb_listener.http_listener.arn
 }
 
-
 # ECS
 output "ecs_cluster_name" {
   description = "Name of the ECS Cluster"
@@ -94,7 +91,6 @@ output "ecs_service_name" {
   description = "Name of the ECS Service"
   value       = aws_ecs_service.medusa_service.name
 }
-
 
 # RDS
 output "rds_endpoint" {
@@ -116,7 +112,6 @@ output "rds_subnet_group" {
   description = "RDS Subnet Group Name"
   value       = aws_db_subnet_group.medusa_db_subnet_group.name
 }
-
 
 # IAM ROLE
 output "ecs_task_execution_role_name" {

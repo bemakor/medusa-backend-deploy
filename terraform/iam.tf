@@ -19,13 +19,11 @@ resource "aws_iam_role_policy_attachment" "ecs_task_execution_attach" {
   role       = aws_iam_role.ecs_task_execution_role-db.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
 }
-
-# Attaching CloudWatch Logs permissions directly to ECS execution role
+# ATTACHHINH CLOUDWATCH LOGS PERMISSIONS TO ECS TASK TOLE
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_cloudwatch_logs" {
   role       = aws_iam_role.ecs_task_execution_role-db.name
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
 }
-
 
 # IAM ROLE FOR CLOUDWATCH LOGGING
 resource "aws_iam_role" "cloudwatch_logging_role" {

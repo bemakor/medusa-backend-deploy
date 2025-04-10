@@ -1,4 +1,4 @@
-# 2 SUBNETS FOR RDS
+# SELECTING 2 SUBNETS FOR RDS
 resource "aws_db_subnet_group" "medusa_db_subnet_group" {
   name       = "medusa-db-subnet-group"
   subnet_ids = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
@@ -34,7 +34,7 @@ resource "aws_db_instance" "medusa_postgres" {
   }
 }
 
-# Create a parameter group for PostgreSQL
+# PARAMETER GROUP FOR RDS POSTGRES
 resource "aws_db_parameter_group" "medusa_postgres_parameter_group" {
   name        = "medusa-postgres-parameter-group"
   family      = "postgres17"
@@ -42,7 +42,9 @@ resource "aws_db_parameter_group" "medusa_postgres_parameter_group" {
 
   parameter {
     name  = "max_connections"
-    value = "500"  # Set the pool size you want
+
+    # SET POOL SIZE
+    value = "500"
     apply_method = "pending-reboot"
   }
 }
