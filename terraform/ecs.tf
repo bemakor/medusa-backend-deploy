@@ -20,7 +20,7 @@ resource "aws_ecs_task_definition" "medusa_task" {
   container_definitions = jsonencode([
     {
       name      = "medusa-server"
-      image     = "rameshxt/medusa-backend:v1.0.16"
+      image     = "IMAGE_NAME"
       portMappings = [
         {
           containerPort = 9000
