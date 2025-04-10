@@ -24,7 +24,7 @@ resource "aws_lb_target_group" "medusa_tg" {
   vpc_id      = aws_vpc.medusa_vpc.id
 
   health_check {
-    path                = "/"
+    path                = "/app"
     protocol            = "HTTP"
     matcher             = "200"
     interval            = 30
