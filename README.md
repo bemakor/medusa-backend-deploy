@@ -11,52 +11,76 @@
   Medusa
 </h1>
 
-<h4 align="center">
-  <a href="https://docs.medusajs.com">Documentation</a> |
-  <a href="https://www.medusajs.com">Website</a>
-</h4>
+# Medusa Backend Deployment on AWS ECS with Terraform & GitHub Actions
 
-<p align="center">
-  Building blocks for digital commerce
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-    <a href="https://www.producthunt.com/posts/medusa"><img src="https://img.shields.io/badge/Product%20Hunt-%231%20Product%20of%20the%20Day-%23DA552E" alt="Product Hunt"></a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-</p>
+This project demonstrates how to deploy the **Medusa.js backend** to **AWS ECS (Fargate)** using **Terraform** for infrastructure provisioning and **GitHub Actions** for CI/CD automation. It follows DevOps best practices for scalability, security, and automation.
 
-## Compatibility
+---
 
-This starter is compatible with versions >= 2 of `@medusajs/medusa`. 
+## Live Infrastructure Overview
 
-## Getting Started
+- **Containerized Backend**: Medusa.js in optimized multi-stage Docker image (size reduced from **1.06 GB → 154 MB**)
+- **CI/CD Pipeline**: Automated with GitHub Actions (build, push, deploy)
+- **AWS Resources**: ECS (Fargate), ALB, RDS (PostgreSQL), VPC, IAM, CloudWatch
+- **IaC**: Entire infrastructure provisioned with modular Terraform code
 
-Visit the [Quickstart Guide](https://docs.medusajs.com/learn/installation) to set up a server.
+---
 
-Visit the [Docs](https://docs.medusajs.com/learn/installation#get-started) to learn more about our system requirements.
+## Tools & Technologies
 
-## What is Medusa
+- **Cloud**: AWS (ECS Fargate, ALB, RDS PostgreSQL, CloudWatch, IAM, VPC)
+- **CI/CD**: GitHub Actions
+- **IaC**: Terraform
+- **Containers**: Docker (multi-stage builds)
+- **Monitoring**: AWS CloudWatch
+- **Security**: IAM roles, security groups, environment variables
 
-Medusa is a set of commerce modules and tools that allow you to build rich, reliable, and performant commerce applications without reinventing core commerce logic. The modules can be customized and used to build advanced ecommerce stores, marketplaces, or any product that needs foundational commerce primitives. All modules are open-source and freely available on npm.
+---
 
-Learn more about [Medusa’s architecture](https://docs.medusajs.com/learn/introduction/architecture) and [commerce modules](https://docs.medusajs.com/learn/fundamentals/modules/commerce-modules) in the Docs.
+## Deployment Process
 
-## Community & Contributions
+1. **Write Terraform configurations** for:
+   - VPC, Subnets, ALB
+   - ECS Cluster, Fargate Services
+   - RDS PostgreSQL
+   - IAM, Security Groups
 
-The community and core team are available in [GitHub Discussions](https://github.com/medusajs/medusa/discussions), where you can ask for support, discuss roadmap, and share ideas.
+2. **Build & Push Docker Image**
+   - Multi-stage Dockerfile to reduce image size
+   - Pushed to Docker Hub on every GitHub push
 
-Join our [Discord server](https://discord.com/invite/medusajs) to meet other community members.
+3. **CI/CD with GitHub Actions**
+   - On push → build & push Docker image
+   - Update ECS service to pull the latest image
 
-## Other channels
+4. **Access the Medusa backend** via the ALB's public DNS
 
-- [GitHub Issues](https://github.com/medusajs/medusa/issues)
-- [Twitter](https://twitter.com/medusajs)
-- [LinkedIn](https://www.linkedin.com/company/medusajs)
-- [Medusa Blog](https://medusajs.com/blog/)
+---
+
+## Challenges Faced
+
+- **Admin panel error**  
+  `Could not find index.html in the admin build directory`  
+  → Fixed by running `medusa build` before starting the server
+
+- **Database not migrating**  
+  → Resolved by modifying **RDS parameter group** to support necessary extensions/configs
+
+- **Heavy Docker image**  
+  → Solved using **multi-stage Docker build**, reduced size from **1.06 GB to 154 MB**
+
+---
+
+## Outcomes
+
+- Complete infrastructure and deployment automated end-to-end
+- Lightweight container images for faster ECS deployment
+- Error handling and environment-specific fixes applied
+- Real-world production-style DevOps implementation
+
+---
+
+## 📫 Contact
+
+**Ramesh Kanna**  
+rameshkanna841@gmail.com • [LinkedIn](https://www.linkedin.com/in/ramesh-kanna-g-325042285/) • [Portfolio](https://rameshxt.pages.dev)
