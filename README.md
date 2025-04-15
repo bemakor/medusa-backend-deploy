@@ -80,6 +80,13 @@ This project demonstrates how to deploy the **Medusa.js backend** to **AWS ECS (
 
 ---
 
+## 📚 Project Document
+
+- [📄 View Document](https://github.com/RameshXT/medusa-backend-deploy/raw/master/docs/Medusa%20Backend%20%20Deployment.pptx)  
+- <a href="https://github.com/RameshXT/medusa-backend-deploy/raw/master/docs/Medusa%20Backend%20%20Deployment.pptx" download>⬇️ Download Document</a>
+
+---
+
 ## 📫 Contact
 
 **Ramesh Kanna**  
