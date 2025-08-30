@@ -1,4 +1,3 @@
-name: Terraform Backend Bootstrap
 
 on:
   workflow_dispatch:
@@ -6,12 +5,11 @@ on:
       bucket_name:
         description: 'S3 bucket name for Terraform state'
         required: true
-  default: 'medusa-cicd-tfstate-bucket'
+        default: 'medusa-cicd-tfstate-bucket'
       dynamodb_table:
         description: 'DynamoDB table name for state locking'
         required: true
         default: 'medusa-tfstate-lock'
-
 jobs:
   create_backend_resources:
     runs-on: ubuntu-latest
