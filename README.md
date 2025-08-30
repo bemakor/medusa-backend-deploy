@@ -11,6 +11,8 @@
   Medusa
 </h1>
 
+
+
 # Medusa Backend Deployment on AWS ECS with Terraform & GitHub Actions
 
 This project demonstrates how to deploy the **Medusa.js backend** to **AWS ECS (Fargate)** using **Terraform** for infrastructure provisioning and **GitHub Actions** for CI/CD automation. It follows DevOps best practices for scalability, security, and automation.
