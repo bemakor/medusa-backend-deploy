@@ -1,3 +1,4 @@
+name: Terraform Backend Bootstrap
 
 on:
   workflow_dispatch:
