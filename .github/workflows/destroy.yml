@@ -1,0 +1,50 @@
+name: Destroy Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_destroy:
+        description: 'Type "DESTROY" to confirm'
+        required: true
+        default: ''
+
+jobs:
+  destroy_infrastructure:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.confirm_destroy == 'DESTROY'
+    
+    steps:
+      - name: CODE CHECKOUT
+        uses: actions/checkout@v2
+
+      - name: INSTALL TERRAFORM
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
+          terraform_version: latest
+
+      - name: CONFIGURE AWS CLI
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: DESTROY AWS INFRASTRUCTURE
+        run: |
+          echo "🚨 DESTROYING ALL AWS RESOURCES..."
+          cd terraform
+          terraform init
+          echo "Terraform initialized."
+          
+          terraform plan -destroy
+          echo "Destroy plan generated."
+          
+          terraform destroy -auto-approve
+          echo "🗑️ All AWS resources have been destroyed!"
+
+      - name: CLEANUP CONFIRMATION
+        run: |
+          echo "✅ Infrastructure destruction completed!"
+          echo "⚠️ Note: S3 bucket and DynamoDB table (backend) may still exist"
+          echo "💡 You may need to manually delete the S3 bucket: medusa-cicd-tfstate-bucket"
