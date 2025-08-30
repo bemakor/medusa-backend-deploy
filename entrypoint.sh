@@ -27,7 +27,7 @@ fi
 
 # Get the current minute and append it to the email
 CURRENT_MINUTE=$(date +%M)
-EMAIL="admin${CURRENT_MINUTE}@gmail.com"
+EMAIL="admin@gmail.com"
 
 echo "Creating admin user with email: $EMAIL"
 yarn medusa user --email "$EMAIL" --password admin
