@@ -24,21 +24,21 @@ jobs:
 
       - name: BUILD DOCKER IMAGE
         run: |
-          IMAGE_TAG="rameshxt/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
+          IMAGE_TAG="simgajew/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
           echo "Building Docker image with tag: $IMAGE_TAG"
           docker build -t $IMAGE_TAG .
           echo "Image build complete."
 
       - name: PUSH DOCKER IMAGES..
         run: |
-          IMAGE_TAG="rameshxt/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
+          IMAGE_TAG="simgajew/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
           echo "Pushing Docker image: $IMAGE_TAG"
           docker push "$IMAGE_TAG"
           echo "Image pushed to Docker Hub."
 
       - name: UPDATE IMAGE TAG IN ecs.tf
         run: |
-          IMAGE_TAG="rameshxt/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
+          IMAGE_TAG="simgajew/medusa-backend:v1.0.${GITHUB_RUN_NUMBER}"
           echo "Updating image tag in ecs.tf with: $IMAGE_TAG"
           bash image-updater.sh "$IMAGE_TAG"
           echo "ecs.tf updated successfully."
