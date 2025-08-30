@@ -6,7 +6,7 @@ on:
       bucket_name:
         description: 'S3 bucket name for Terraform state'
         required: true
-        default: 'medusa-tfstate-bucket'
+  default: 'medusa-cicd-tfstate-bucket'
       dynamodb_table:
         description: 'DynamoDB table name for state locking'
         required: true
