@@ -33,10 +33,8 @@ echo "Creating admin user with email: $EMAIL"
 yarn medusa user --email "$EMAIL" --password admin
 if [ $? -eq 0 ]; then
   echo -e "Admin user created with email: ${GREEN}$EMAIL${NC} and password: ${GREEN}admin${NC}"
-
 else
-  echo "Failed to create admin user!"
-  exit 1
+  echo "Admin user creation failed (user may already exist). Continuing..."
 fi
 
 echo "Starting Medusa server.."

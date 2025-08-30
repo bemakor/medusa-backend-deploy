@@ -72,9 +72,28 @@ jobs:
           terraform apply -auto-approve
           echo "Infrastructure deployed to AWS ECS."
 
+      - name: UPDATE ECS SERVICE WITH LATEST TASK DEFINITION
+        run: |
+          echo "Updating ECS service to use latest task definition..."
+          aws ecs update-service \
+            --cluster medusa-cluster \
+            --service medusa-service \
+            --force-new-deployment \
+            --enable-execute-command
+          echo "ECS service updated successfully."
+
+      - name: WAIT FOR DEPLOYMENT TO COMPLETE
+        run: |
+          echo "Waiting for ECS deployment to complete..."
+          aws ecs wait services-stable \
+            --cluster medusa-cluster \
+            --services medusa-service
+          echo "ECS deployment completed."
+
       - name: PRINT ALB DNS NAME
         run: |
           cd terraform
           ALB_URL=$(terraform output -raw alb_dns_name)
           echo "🎉 Medusa backend deployed successfully!"
           echo "🌐 Access it here: http://${ALB_URL}/app"
+          echo "💡 ECS Exec is enabled - you can run commands in the container via AWS Console"
